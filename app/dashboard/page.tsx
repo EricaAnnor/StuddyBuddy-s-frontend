@@ -7,7 +7,6 @@ import ChatSidebar from "@/components/ChatSidebar"
 import ChatRoom from "@/components/ChatRoom"
 import { useAppSelector, useAppDispatch } from "@/store/hooks"
 import { refreshThunk } from "@/store/loginSlice"
-import AllUsers from "@/components/AllUsers"
 import Allusers from "@/components/Alluser"
 import EditProfile from "@/components/Profile"
 
@@ -18,6 +17,8 @@ export default function DashboardPage() {
     const tokenFromRedux = useAppSelector((state) => state.loginUser.access_token);
     const tokenFromLocalStorage = typeof window !== "undefined" ? localStorage.getItem("access_token") : null;
     const [isAllUsersOpen, setIsAllUsersOpen] = useState(false)
+    const [mobileShowChat, setMobileShowChat] = useState(false)
+
 
     const token = tokenFromRedux || tokenFromLocalStorage;
     const dispatch = useAppDispatch();
@@ -27,6 +28,7 @@ export default function DashboardPage() {
     const mountedRef = useRef(true);
     const [isEditProfileOpen, setIsEditProfileOpen] = useState<boolean>(false)
     const user = useAppSelector((state) => state.profileReducer.user)
+    const [showAllUsers,setShowAllUsers] = useState(false)
 
 
     const [connectionStatus, setConnectionStatus] = useState<'connecting' | 'connected' | 'disconnected'>('disconnected');
@@ -36,7 +38,7 @@ export default function DashboardPage() {
         // If it already starts with http, return as is
         if (imagePath.startsWith('http')) return imagePath
         // Otherwise, prepend the base URL
-        return `http://localhost:8000${imagePath}`
+        return `https://studybuddy-ilmw.onrender.com${imagePath}`
     }
 
     const imgsrc = getImageUrl(user?.profile_pic)
@@ -88,7 +90,7 @@ export default function DashboardPage() {
         console.log("Connecting to presence WebSocket...");
 
         try {
-            const socket = new WebSocket(`ws://localhost:8000/studybuddy/v1/presence?token=${token}`);
+            const socket = new WebSocket(`wss://studybuddy-ilmw.onrender.com/studybuddy/v1/presence?token=${token}`);
             socketRef.current = socket;
 
             socket.onopen = () => {
@@ -198,32 +200,30 @@ export default function DashboardPage() {
     }, [token, connectWebSocket, cleanup]);
 
     return (
-        <div className="min-h-screen bg-black flex">
-            <div className="absolute top-0 left-0 right-0 z-20 bg-gray-900/80 backdrop-blur-sm shadow-lg px-6 py-2">
+        <div className="min-h-screen bg-black flex flex-col">
+            {/* Top navbar */}
+            <div className="fixed top-0 left-0 right-0 z-20 bg-gray-900/80 backdrop-blur-sm shadow-lg px-4 sm:px-6 py-2">
                 <div className="flex items-center justify-between">
-                    {/* StudyBuddy logo - moved to left side only */}
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2 sm:gap-3">
                         <div className="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center shadow-md">
                             <BookOpen className="w-5 h-5 text-white" />
                         </div>
-                        <span className="text-white text-lg font-bold">StudyBuddy</span>
-
-                        {/* Connection status indicator */}
-                        <div className="flex items-center gap-2">
+                        <span className="text-white text-base sm:text-lg font-bold">StudyBuddy</span>
+                        <div className="flex items-center gap-1.5">
                             <div className={`w-2 h-2 rounded-full ${connectionStatus === 'connected' ? 'bg-green-500' :
                                 connectionStatus === 'connecting' ? 'bg-yellow-500 animate-pulse' :
                                     'bg-red-500'
                                 }`}></div>
-                            <span className="text-xs text-gray-400 capitalize">{connectionStatus}</span>
+                            <span className="text-xs text-gray-400 capitalize hidden sm:inline">{connectionStatus}</span>
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-1 sm:gap-3">
                         <Button
                             variant="ghost"
                             size="sm"
-                            onClick={() => setIsAllUsersOpen(true)}
-                            className="text-gray-400 hover:text-white hover:bg-gray-800/50 transition-colors p-1.5 md:p-2"
+                            onClick={() => setShowAllUsers(!showAllUsers)}
+                            className="text-gray-400 hover:text-white hover:bg-gray-800/50 transition-colors p-1.5"
                             title="All Users"
                         >
                             <Users className="w-4 h-4" />
@@ -231,14 +231,14 @@ export default function DashboardPage() {
                         <Button
                             variant="ghost"
                             size="sm"
-                            className="text-gray-400 hover:text-white hover:bg-gray-800/50 transition-colors p-2"
+                            className="text-gray-400 hover:text-white hover:bg-gray-800/50 transition-colors p-1.5"
                         >
                             <Bell className="w-4 h-4" />
                         </Button>
                         <Button
                             variant="ghost"
                             size="sm"
-                            className="text-gray-400 hover:text-white hover:bg-gray-800/50 transition-colors p-2"
+                            className="text-gray-400 hover:text-white hover:bg-gray-800/50 transition-colors p-1.5"
                         >
                             <Settings className="w-4 h-4" />
                         </Button>
@@ -259,34 +259,46 @@ export default function DashboardPage() {
                 </div>
             </div>
 
-            <div className="flex flex-1 pt-14 p-4 gap-4">
-                <div className="bg-gray-900/50 backdrop-blur-sm rounded-xl shadow-xl border border-gray-800/50">
-                    {
-                        isEditProfileOpen ? <EditProfile
-                            isOpen={isEditProfileOpen}
-                            onClose={() => setIsEditProfileOpen(false)}
-
-
-                        /> : <ChatSidebar />
+            {/* Main content */}
+            <div className="flex flex-1 pt-14 overflow-hidden h-screen">
+                {/* Sidebar — full width on mobile (hidden when chat is open), fixed width on desktop */}
+                <div className={`
+                    ${mobileShowChat ? "hidden md:flex" : "flex"}
+                    flex-col w-full md:w-80 flex-shrink-0
+                    bg-gray-900/50 backdrop-blur-sm md:rounded-l-xl
+                    shadow-xl border-r border-gray-800/50 md:border md:m-4 md:rounded-xl
+                `}>
+                    {isEditProfileOpen
+                        ? <EditProfile isOpen={isEditProfileOpen} onClose={() => setIsEditProfileOpen(false)} />
+                        : <ChatSidebar onChatSelect={() => setMobileShowChat(true)} />
                     }
-
                 </div>
 
-                <div className="flex-1 bg-gray-900/50 backdrop-blur-sm rounded-xl shadow-xl border border-gray-800/50">
+                {/* Chat room — full width on mobile when open, flex-1 on desktop */}
+                <div className={`
+                    ${mobileShowChat ? "flex" : "hidden md:flex"}
+                    flex-1 flex-col
+                    bg-gray-900/50 backdrop-blur-sm
+                    shadow-xl border-gray-800/50 md:border md:m-4 md:ml-0 md:rounded-xl
+                `}>
                     {(chat_type !== "no chat") &&
                         <ChatRoom
                             id={chat_id}
                             m_type={chat_type}
                             friend_pic={friend_pic}
                             friend_name={friend_name}
+                            onBack={() => setMobileShowChat(false)}
                         />
                     }
                 </div>
 
-                <Allusers/>
+                {/* All Users — fixed full-screen overlay on mobile, inline panel on desktop */}
+                {showAllUsers && (
+                    <div className="fixed inset-0 pt-14 md:static md:inset-auto md:pt-0 z-40 md:z-auto md:flex md:flex-shrink-0 md:m-4 md:ml-0">
+                        <Allusers setShowAllUsers={setShowAllUsers} />
+                    </div>
+                )}
             </div>
-            <AllUsers isOpen={isAllUsersOpen} onClose={() => setIsAllUsersOpen(false)} />
-
         </div>
     )
 }

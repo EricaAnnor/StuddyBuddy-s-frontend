@@ -230,33 +230,26 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen bg-black">
-      {/* Top navigation bar with logo and language selector */}
-      <div className="absolute top-6 left-6 z-10">
+      {/* Header */}
+      <div className="flex items-center justify-between px-4 sm:px-6 py-4 z-10 relative">
         <div className="flex items-center gap-3">
-          {/* StudyBuddy logo with purple background */}
-          <div className="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center">
-            <BookOpen className="w-6 h-6 text-white" />
+          <div className="w-9 h-9 sm:w-10 sm:h-10 bg-purple-600 rounded-lg flex items-center justify-center">
+            <BookOpen className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
           </div>
-          <span className="text-white text-xl font-bold">StudyBuddy</span>
+          <span className="text-white text-lg sm:text-xl font-bold">StudyBuddy</span>
         </div>
-      </div>
-
-      {/* Language selector in top right */}
-      <div className="absolute top-6 right-6 z-10">
         <select className="bg-gray-800 text-white border border-gray-700 rounded px-3 py-1 text-sm">
           <option>English</option>
         </select>
       </div>
 
-      {/* Main content area with split-screen layout */}
-      <div className="flex min-h-screen">
+      <div className="flex min-h-[calc(100vh-64px)]">
         {/* Left side - Registration Form */}
-        <div className="flex-1 flex items-center justify-center p-8">
+        <div className="flex-1 flex items-center justify-center px-4 sm:px-8 py-8">
           <div className="w-full max-w-md">
-            {/* Welcome section with heading and description */}
             <div className="mb-8">
-              <h1 className="text-3xl font-bold text-white mb-2">Join StudyBuddy!</h1>
-              <p className="text-gray-400">Create your account and start collaborating with friends in study groups.</p>
+              <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Join StudyBuddy!</h1>
+              <p className="text-gray-400 text-sm sm:text-base">Create your account and start collaborating with friends in study groups.</p>
             </div>
 
             {errors.general && (
@@ -265,13 +258,11 @@ export default function RegisterPage() {
               </div>
             )}
 
-            {/* Google Sign-up Button with branded styling */}
             <Button
               variant="outline"
               className="w-full mb-6 bg-gray-800 border-gray-700 text-white hover:bg-gray-700 h-12 rounded-lg"
               disabled={isLoading}
             >
-              {/* Google logo SVG with official brand colors */}
               <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24">
                 <path
                   fill="#4285F4"
@@ -293,7 +284,6 @@ export default function RegisterPage() {
               Sign up with Google
             </Button>
 
-            {/* Divider between OAuth and traditional form */}
             <div className="relative mb-6">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-gray-700"></div>
@@ -304,32 +294,26 @@ export default function RegisterPage() {
             </div>
 
             <form onSubmit={handleFormSubmit} className="space-y-4">
-              {/* Full Name Input Field */}
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-2">Full Name</label>
                 <div className="relative">
-                  {/* User icon positioned absolutely inside input */}
                   <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
                   <Input
                     type="text"
                     name="username"
-
                     placeholder="Your full name"
                     value={formData.username}
                     onChange={handleChange}
-                    className={`pl-10 bg-gray-900 border-gray-700 text-white placeholder-gray-500 h-12 rounded-lg focus:border-purple-500 focus:ring-purple-500 ${errors.fullName ? "border-red-500 focus:border-red-500 focus:ring-red-500" : ""
-                      }`}
+                    className={`pl-10 bg-gray-900 border-gray-700 text-white placeholder-gray-500 h-12 rounded-lg focus:border-purple-500 focus:ring-purple-500 ${errors.fullName ? "border-red-500 focus:border-red-500 focus:ring-red-500" : ""}`}
                     disabled={isLoading}
                   />
                 </div>
                 <ErrorMessage error={errors.fullName} />
               </div>
 
-              {/* Email Input Field */}
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-2">Email</label>
                 <div className="relative">
-                  {/* Mail icon positioned absolutely inside input */}
                   <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
                   <Input
                     type="email"
@@ -337,45 +321,38 @@ export default function RegisterPage() {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className={`pl-10 bg-gray-900 border-gray-700 text-white placeholder-gray-500 h-12 rounded-lg focus:border-purple-500 focus:ring-purple-500 ${errors.email ? "border-red-500 focus:border-red-500 focus:ring-red-500" : ""
-                      }`}
+                    className={`pl-10 bg-gray-900 border-gray-700 text-white placeholder-gray-500 h-12 rounded-lg focus:border-purple-500 focus:ring-purple-500 ${errors.email ? "border-red-500 focus:border-red-500 focus:ring-red-500" : ""}`}
                     disabled={isLoading}
                   />
                 </div>
                 <ErrorMessage error={errors.email} />
               </div>
 
-              {/* Password Input Field with visibility toggle */}
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-2">Password</label>
                 <div className="relative">
-                  {/* Lock icon positioned absolutely inside input */}
                   <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
                   <Input
-                    type={showPassword ? "text" : "password"} // Toggle between text and password type
+                    type={showPassword ? "text" : "password"}
                     placeholder="Create a password"
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
-                    className={`pl-10 pr-10 bg-gray-900 border-gray-700 text-white placeholder-gray-500 h-12 rounded-lg focus:border-purple-500 focus:ring-purple-500 ${errors.password ? "border-red-500 focus:border-red-500 focus:ring-red-500" : ""
-                      }`}
+                    className={`pl-10 pr-10 bg-gray-900 border-gray-700 text-white placeholder-gray-500 h-12 rounded-lg focus:border-purple-500 focus:ring-purple-500 ${errors.password ? "border-red-500 focus:border-red-500 focus:ring-red-500" : ""}`}
                     disabled={isLoading}
                   />
-                  {/* Password visibility toggle button */}
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-400"
                     disabled={isLoading}
                   >
-                    {/* Show eye-off when password is visible, eye when hidden */}
                     {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                   </button>
                 </div>
                 <ErrorMessage error={errors.password} />
               </div>
 
-              {/* Terms and Privacy Agreement Checkbox */}
               <div className="flex items-start space-x-3 mt-4">
                 <input
                   type="checkbox"
@@ -383,7 +360,6 @@ export default function RegisterPage() {
                   checked={agreedToTerms}
                   onChange={(e) => {
                     setAgreedToTerms(e.target.checked)
-                    // Clear general error when terms are agreed
                     if (errors.general && e.target.checked) {
                       setErrors((prev) => ({ ...prev, general: "" }))
                     }
@@ -399,7 +375,6 @@ export default function RegisterPage() {
                 </label>
               </div>
 
-              {/* Submit Button - disabled when form is invalid or loading */}
               <Button
                 type="submit"
                 className="w-full mt-6 bg-purple-600 hover:bg-purple-700 text-white h-12 font-medium rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
@@ -409,59 +384,48 @@ export default function RegisterPage() {
               </Button>
             </form>
 
-            {/* Link to login page for existing users */}
             <div className="text-center mt-6">
-              <span className="text-gray-400">Already have an account? </span>
-              <Link href="/" className="text-purple-400 hover:text-purple-300 font-medium">
+              <span className="text-gray-400 text-sm sm:text-base">Already have an account? </span>
+              <Link href="/" className="text-purple-400 hover:text-purple-300 font-medium text-sm sm:text-base">
                 Sign in
               </Link>
             </div>
           </div>
         </div>
 
-        {/* Right side - Promotional Content and Visualization */}
-        <div className="flex-1 flex flex-col items-center justify-center p-8 relative">
-          {/* Statistics and call-to-action section */}
+        {/* Right side - Promotional Content (hidden on mobile) */}
+        <div className="hidden md:flex flex-1 flex-col items-center justify-center p-8 relative">
           <div className="text-center mb-8">
-            <h2 className="text-4xl font-bold text-white mb-2">100K+ students. 25K+ study</h2>
-            <h2 className="text-4xl font-bold text-gray-400 mb-6">groups created.</h2>
+            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-2">100K+ students. 25K+ study</h2>
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-400 mb-6">groups created.</h2>
             <Button className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg font-medium">
               Join Now
             </Button>
           </div>
 
-          {/* Animated study group visualization */}
           <div className="relative">
-            <div className="w-64 h-64 relative">
-              {/* Central study group icon representing collaboration */}
+            <div className="w-56 h-56 lg:w-64 lg:h-64 relative">
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="w-20 h-20 bg-gray-800 rounded-xl flex items-center justify-center border border-gray-700">
                   <Users className="w-10 h-10 text-purple-400" />
                 </div>
               </div>
 
-              {/* Orbiting colored dots representing different study materials/subjects */}
               <div className="absolute inset-0 animate-spin" style={{ animationDuration: "20s" }}>
-                {/* Top dot - purple for main subject */}
                 <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-2">
                   <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
                 </div>
-                {/* Bottom dot - blue for secondary subject */}
                 <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-2">
-
                   <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
                 </div>
-                {/* Left dot - green for resources */}
                 <div className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-2">
                   <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                 </div>
-                {/* Right dot - yellow for notes */}
                 <div className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-2">
                   <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
                 </div>
               </div>
 
-              {/* Orbital rings to show connection and movement */}
               <div className="absolute inset-4 border border-gray-700 rounded-full opacity-30"></div>
               <div className="absolute inset-8 border border-purple-500/20 rounded-full"></div>
             </div>

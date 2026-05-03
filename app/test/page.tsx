@@ -6,7 +6,7 @@ import { BookOpen, Settings, Bell, Menu, X, Users, Edit } from "lucide-react"
 import ChatSidebar from "@/components/ChatSidebar"
 import ChatRoom from "@/components/ChatRoom"
 import EditProfile from "@/components/EditProfile"
-import AllUsers from "@/components/AllUsers"
+import AllUsers from "@/components/AllMembers"
 
 // Mock data for demonstration
 const mockUsers = [

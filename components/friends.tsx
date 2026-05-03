@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks"
 import { friendsThunk, updateLastFetched } from "@/store/friendsSlice"
 import { updateChat } from "@/store/chatSlice"
 
-export default function Friends() {
+export default function Friends({ onChatSelect }: { onChatSelect?: () => void }) {
     const dispatch = useAppDispatch()
     const check = useAppSelector((state) => state.friendsReducer.lastFetched)
     const friends = useAppSelector((state) => state.friendsReducer.friends)
@@ -32,11 +32,11 @@ export default function Friends() {
         // If it already starts with http, return as is
         if (imagePath.startsWith('http')) return imagePath
         // Otherwise, prepend the base URL
-        return `http://localhost:8000${imagePath}`
+        return `https://studybuddy-ilmw.onrender.com${imagePath}`
     }
 
     return (
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 h-[78vh] overflow-y-auto">
             {filteredFriends.map((friend) => {
 
                 return (
@@ -51,6 +51,7 @@ export default function Friends() {
                                     friend_pic: friend.profile_pic,
                                 })
                             )
+                            onChatSelect?.()
                         }}
                         className={`p-4 border-b border-gray-700/30 cursor-pointer transition-all duration-200 ${selectedChat === friend.user_id
                             ? "bg-purple-500/10 "

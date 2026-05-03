@@ -24,38 +24,29 @@ interface User {
   isGroup?: boolean
 }
 
-// Props interface for the ChatSidebar component
-// interface ChatSidebarProps {
-//   users: User[]
-//   selectedChat: User
-//   onSelectChat: (user: User) => void
-// }
+interface ChatSidebarProps {
+  onChatSelect?: () => void
+}
 
-export default function ChatSidebar(){
-  // State for active tab (Recents, Friends, Groups)
-  // const [activeTab, setActiveTab] = useState<"recents" | "friends" | "groups">("recents")
+export default function ChatSidebar({ onChatSelect }: ChatSidebarProps) {
   const [searchQuery, setSearchQuery] = useState("")
   const curTab = useAppSelector((state) => state.chatReducer.cur_tab);
   const dispatch = useAppDispatch()
 
-  
-
-
-  // Filter users based on active tab and search query
   const renderTabContent = () => {
     switch (curTab) {
       case "groups":
-        return <Groups />;
+        return <Groups onChatSelect={onChatSelect} />;
       case "friends":
-        return <Friends />;
+        return <Friends onChatSelect={onChatSelect} />;
       case "recent":
       default:
-        return <Recents />;
+        return <Recents onChatSelect={onChatSelect} />;
     }
   };
 
   return (
-    <div className="w-80 flex flex-col h-full">
+    <div className="w-full flex flex-col h-full">
       {/* Search bar for finding chats */}
       <div className="p-4 border-b border-gray-700/50">
         <div className="relative">
@@ -80,8 +71,8 @@ export default function ChatSidebar(){
               : "text-gray-400 hover:text-white hover:bg-gray-800/30"
           }`}
         >
-          <Clock className="w-4 h-4 mr-2" />
-          Recents
+          <Clock className="w-4 h-4 sm:mr-2" />
+          <span className="hidden sm:inline">Recents</span>
         </Button>
         <Button
           variant="ghost"
@@ -92,8 +83,8 @@ export default function ChatSidebar(){
               : "text-gray-400 hover:text-white hover:bg-gray-800/30"
           }`}
         >
-          <UserPlus className="w-4 h-4 mr-2" />
-          Friends
+          <UserPlus className="w-4 h-4 sm:mr-2" />
+          <span className="hidden sm:inline">Friends</span>
         </Button>
         <Button
           variant="ghost"
@@ -104,8 +95,8 @@ export default function ChatSidebar(){
               : "text-gray-400 hover:text-white hover:bg-gray-800/30"
           }`}
         >
-          <Users className="w-4 h-4 mr-2" />
-          Groups
+          <Users className="w-4 h-4 sm:mr-2" />
+          <span className="hidden sm:inline">Groups</span>
         </Button>
       </div>
 

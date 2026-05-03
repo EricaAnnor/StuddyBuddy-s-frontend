@@ -4,7 +4,7 @@ import { conversationThunk, updateLastFetched } from "@/store/recents"
 import { updateChat } from "@/store/chatSlice"
 // import { UpdatePresence } from "@/store/allUsers"
 
-export default function Recents() {
+export default function Recents({ onChatSelect }: { onChatSelect?: () => void }) {
     const dispatch = useAppDispatch()
     const check = useAppSelector((state) => state.conversationReducer.lastFetched)
     const recents = useAppSelector((state) => state.conversationReducer.conversations)
@@ -26,7 +26,7 @@ export default function Recents() {
         // If it already starts with http, return as is
         if (imagePath.startsWith('http')) return imagePath
         // Otherwise, prepend the base URL
-        return `http://localhost:8000${imagePath}`
+        return `https://studybuddy-ilmw.onrender.com${imagePath}`
     }
 
     // Filter conversations by search
@@ -63,7 +63,7 @@ export default function Recents() {
                 return (
                     <div
                         key={user._id.conversation_id}
-                        onClick={() =>
+                        onClick={() => {
                             dispatch(
                                 updateChat({
                                     chat_id: user._id.conversation_id,
@@ -72,7 +72,8 @@ export default function Recents() {
                                     friend_pic: user.profile_pic,
                                 })
                             )
-                        }
+                            onChatSelect?.()
+                        }}
                         className={`p-4 border-b border-gray-700/30 cursor-pointer transition-all duration-200 ${selectedChat === user._id.conversation_id
                             ? "bg-purple-500/10 "
                             : "hover:bg-gray-800/20"

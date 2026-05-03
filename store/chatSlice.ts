@@ -4,6 +4,14 @@ import { createSlice ,PayloadAction} from "@reduxjs/toolkit";
 type chatType = "one_on_one" | "group" | "no chat"
 
 type curTab = "recent" | "friends" | "groups"
+export type MemberRole = "member" | "admin";
+
+interface GroupMember {
+    user_id: string;
+    username: string;
+    email: string;
+    role: MemberRole;
+}
 
 interface chatState{
     chat_id:string|null
@@ -11,6 +19,7 @@ interface chatState{
     cur_tab:curTab
     friend_name:string
     friend_pic:string | null
+    group_members?: GroupMember[] 
 }
 
 const initialState:chatState = {
@@ -28,6 +37,8 @@ interface UpdateChatPayload {
   chat_type: chatType
   friend_name: string
   friend_pic: string|null
+  group_members?: GroupMember[] 
+
 }
 
 const chatSlice = createSlice({
@@ -40,6 +51,7 @@ const chatSlice = createSlice({
             state.chat_type = action.payload.chat_type
             state.friend_name = action.payload.friend_name
             state.friend_pic = action.payload.friend_pic
+            state.group_members = action.payload.group_members
         },
 
         updateTab: (state,action) =>{

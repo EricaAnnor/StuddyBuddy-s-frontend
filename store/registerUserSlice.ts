@@ -9,7 +9,7 @@ export const registerUserThunk = createAsyncThunk(
         try{
             console.log("Payload being sent:", userData); // 👈 log before sending
             const response = await axios.post(
-                'http://0.0.0.0:8000/studybuddy/v1/user',
+                'https://studybuddy-ilmw.onrender.com/studybuddy/v1/user',
                 userData
             );
 

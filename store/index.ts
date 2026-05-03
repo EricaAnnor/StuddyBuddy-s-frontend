@@ -8,6 +8,7 @@ import conversationReduce from "./recents"
 import allUsersReduce from "./allUsers"
 import upload from "./fileUpload"
 import user from "./profile"
+import chatstore from "./chatSlice"
 
 export const store = configureStore({
   reducer: {
@@ -19,7 +20,8 @@ export const store = configureStore({
     conversationReducer:conversationReduce,
     allUsersReducer:allUsersReduce,
     uploadReducer:upload,
-    profileReducer:user
+    profileReducer:user,
+    chatStore:chatstore
 
   }
 });

@@ -8,7 +8,7 @@ import { groupthunk } from "@/store/groupSlice";
 import { updateLastFetched } from "@/store/groupSlice";
 
 
-export default function Groups() {
+export default function Groups({ onChatSelect }: { onChatSelect?: () => void }) {
 
     const dispatch = useAppDispatch()
     const check = useAppSelector((state) => state.userGroups.lastFetched)
@@ -23,7 +23,7 @@ export default function Groups() {
         // If it already starts with http, return as is
         if (imagePath.startsWith('http')) return imagePath
         // Otherwise, prepend the base URL
-        return `http://localhost:8000${imagePath}`
+        return `https://studybuddy-ilmw.onrender.com${imagePath}`
     }   
 
    
@@ -65,20 +65,23 @@ export default function Groups() {
         //     </div>
         // })
 
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 h-[78vh] overflow-y-auto">
             {filteredGroups.map((group) => (
     //              const imgsrc = getImageUrl(user?.profile_pic)
     // const img_ = user?.username.trim()[0]
                 <div
                     key={group.group_id}
-                    onClick={() => { dispatch(updateChat({ chat_id: group.group_id, chat_type: "group", friend_name: group.group_name, friend_pic: group.profile_pic })) }}
+                    onClick={() => {
+                        dispatch(updateChat({ chat_id: group.group_id, chat_type: "group", friend_name: group.group_name, friend_pic: group.profile_pic, group_members: group.members }))
+                        onChatSelect?.()
+                    }}
                     className={`p-4 border-b border-gray-700/30 cursor-pointer transition-all duration-200 ${selectedChat === group.group_id ? "bg-purple-500/10 " : "hover:bg-gray-800/20"
                         }`}
                 >
                     <div className="flex items-center gap-3">
                         {/* User avatar with online status indicator */}
                         <div className="relative">
-                            <div className="w-7 h-7 bg-purple-600 rounded-full flex items-center justify-center shadow-md cursor-pointer hover:bg-purple-500 transition-colors" >
+                            <div className="w-11 h-11 bg-purple-600 rounded-full flex items-center justify-center shadow-md cursor-pointer hover:bg-purple-500 transition-colors" >
                                 {getImageUrl(group.profile_pic) ? (
                                     <img
                                         src={getImageUrl(group.profile_pic) || "/placeholder.svg"}
@@ -94,16 +97,15 @@ export default function Groups() {
                             {/* Online status dot */}
 
                             {/* {user.isOnline && ( */}
-                            <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-gray-900 shadow-sm"></div>
 
                         </div>
 
                         {/* User info and message preview */}
-                        <div className="flex-1 min-w-0">
+                        <div className="flex-1 min-w-0 ml-3">
                             <div className="flex items-center justify-between mb-1">
                                 <h3 className="text-white font-medium truncate">{group.group_name}</h3>
                                 {/* don't forget to add timestamp */}
-                                <span className="text-xs text-gray-500">lastseen recently</span>
+                                {/* <span className="text-xs text-gray-500">lastseen recently</span> */}
                             </div>
 
                             {/* Show description for Friends tab, last message for Recents */}

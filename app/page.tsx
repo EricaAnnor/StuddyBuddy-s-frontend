@@ -44,28 +44,26 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-black">
-      <div className="absolute top-6 left-6 z-10">
+      {/* Header */}
+      <div className="flex items-center justify-between px-4 sm:px-6 py-4 z-10 relative">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center">
-            <BookOpen className="w-6 h-6 text-white" />
+          <div className="w-9 h-9 sm:w-10 sm:h-10 bg-purple-600 rounded-lg flex items-center justify-center">
+            <BookOpen className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
           </div>
-          <span className="text-white text-xl font-bold">StudyBuddy</span>
+          <span className="text-white text-lg sm:text-xl font-bold">StudyBuddy</span>
         </div>
-      </div>
-
-      <div className="absolute top-6 right-6 z-10">
         <select className="bg-gray-800 text-white border border-gray-700 rounded px-3 py-1 text-sm">
           <option>English</option>
         </select>
       </div>
 
-      <div className="flex min-h-screen">
+      <div className="flex min-h-[calc(100vh-64px)]">
         {/* Left side - Login Form */}
-        <div className="flex-1 flex items-center justify-center p-8">
+        <div className="flex-1 flex items-center justify-center px-4 sm:px-8 py-8">
           <div className="w-full max-w-md">
             <div className="mb-8">
-              <h1 className="text-3xl font-bold text-white mb-2">Welcome!</h1>
-              <p className="text-gray-400">Connect with study groups, friends, and excel together.</p>
+              <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Welcome!</h1>
+              <p className="text-gray-400 text-sm sm:text-base">Connect with study groups, friends, and excel together.</p>
             </div>
 
             <Button
@@ -104,15 +102,12 @@ export default function LoginPage() {
 
             <form onSubmit={handleSubmit}>
               <div className="space-y-4">
-                {/* Display error message if exists */}
                 {error && (
                   <div className="bg-red-900/20 border border-red-600 text-red-400 px-4 py-3 rounded-lg text-sm">
                     {typeof error === "string" ? error : (error as any)?.detail ?? "Something went wrong"}
                   </div>
                 )}
 
-
-                {/* Email Input */}
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">Email</label>
                   <div className="relative">
@@ -129,7 +124,6 @@ export default function LoginPage() {
                   </div>
                 </div>
 
-                {/* Password Input */}
                 <div>
                   <div className="flex justify-between items-center mb-2">
                     <label className="block text-sm font-medium text-gray-300">Password</label>
@@ -169,8 +163,8 @@ export default function LoginPage() {
             </form>
 
             <div className="text-center mt-6">
-              <span className="text-gray-400">Don't have an account? </span>
-              <Link href="/register" className="text-purple-400 hover:text-purple-300 font-medium">
+              <span className="text-gray-400 text-sm sm:text-base">Don't have an account? </span>
+              <Link href="/register" className="text-purple-400 hover:text-purple-300 font-medium text-sm sm:text-base">
                 Sign up
               </Link>
               <div className="mt-2">
@@ -182,11 +176,11 @@ export default function LoginPage() {
           </div>
         </div>
 
-        {/* Right side - Promotional Content */}
-        <div className="flex-1 flex flex-col items-center justify-center p-8 relative">
+        {/* Right side - Promotional Content (hidden on mobile) */}
+        <div className="hidden md:flex flex-1 flex-col items-center justify-center p-8 relative">
           <div className="text-center mb-8">
-            <h2 className="text-4xl font-bold text-white mb-2">100K+ students. 25K+ study</h2>
-            <h2 className="text-4xl font-bold text-gray-400 mb-6">groups created.</h2>
+            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-2">100K+ students. 25K+ study</h2>
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-400 mb-6">groups created.</h2>
             <Button className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg font-medium">
               Join Now
             </Button>
@@ -194,15 +188,13 @@ export default function LoginPage() {
 
           {/* Study visualization */}
           <div className="relative">
-            <div className="w-64 h-64 relative">
-              {/* Central study group icon */}
+            <div className="w-56 h-56 lg:w-64 lg:h-64 relative">
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="w-20 h-20 bg-gray-800 rounded-xl flex items-center justify-center border border-gray-700">
                   <Users className="w-10 h-10 text-purple-400" />
                 </div>
               </div>
 
-              {/* Orbiting elements representing study materials */}
               <div className="absolute inset-0 animate-spin" style={{ animationDuration: "20s" }}>
                 <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-2">
                   <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
@@ -218,7 +210,6 @@ export default function LoginPage() {
                 </div>
               </div>
 
-              {/* Orbital ring */}
               <div className="absolute inset-4 border border-gray-700 rounded-full opacity-30"></div>
               <div className="absolute inset-8 border border-purple-500/20 rounded-full"></div>
             </div>

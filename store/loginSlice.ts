@@ -28,10 +28,18 @@ export const loginUserThunk = createAsyncThunk<TokenResponse, any, { rejectValue
     "login",
     async (credentials, { rejectWithValue }) => {
         try {
-            const res = await axios.post<TokenResponse>('http://0.0.0.0:8000/studybuddy/v1/login', qs.stringify(credentials), { headers: { "Content-Type": "application/x-www-form-urlencoded" } });
+            const res = await axios.post<TokenResponse>('https://studybuddy-ilmw.onrender.com/studybuddy/v1/login', qs.stringify(credentials), { headers: { "Content-Type": "application/x-www-form-urlencoded" } });
             return res.data;
         } catch (error: any) {
-            return rejectWithValue(error.response?.data || "Error logging in");
+            const detail = error.response?.data?.detail;
+            // FastAPI validation error → array of objects
+            const message = Array.isArray(detail)
+                ? detail[0]?.msg ?? "Validation error"
+                : typeof detail === "string"
+                ? detail
+                : "Error logging in";
+            return rejectWithValue(message)
+            // return rejectWithValue(error.response?.data || "Error logging in");
         }
     }
 );
@@ -43,7 +51,7 @@ export const refreshThunk = createAsyncThunk<RefreshResponse, void, { rejectValu
 
     async (_, { rejectWithValue }) => {
         try {
-            const response = await axios.post("http://0.0.0.0:8000/studybuddy/v1/refresh", {},
+            const response = await axios.post("https://studybuddy-ilmw.onrender.com/studybuddy/v1/refresh", {},
                 {
                     withCredentials: true,
                 }
@@ -52,7 +60,15 @@ export const refreshThunk = createAsyncThunk<RefreshResponse, void, { rejectValu
             return response.data
         }
         catch (error: any) {
-            return rejectWithValue(error.response?.data || "Error getting refresh token");
+            const detail = error.response?.data?.detail;
+            // FastAPI validation error → array of objects
+            const message = Array.isArray(detail)
+                ? detail[0]?.msg ?? "Validation error"
+                : typeof detail === "string"
+                ? detail
+                : "Error logging in";
+            return rejectWithValue(message)
+            // return rejectWithValue(error.response?.data || "Error getting refresh token");
         }
 
     }
@@ -110,6 +126,7 @@ const loginUserSlice = createSlice({
             })
 
             .addCase(refreshThunk.fulfilled, (state, action: PayloadAction<RefreshResponse>) => {
+                state.loading = false;
                 state.access_token = action.payload.access_token
                 localStorage.setItem("access_token", action.payload.access_token);
                 state.user = action.payload.user;
