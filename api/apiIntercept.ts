@@ -7,7 +7,7 @@ export const BASE_URL = "https://studybuddy-ilmw.onrender.com/studybuddy/v1";
 
 const api = axios.create({
   baseURL: BASE_URL,
-  timeout: 10000,
+  timeout: 60000,
   withCredentials: true,
 });
 
