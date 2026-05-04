@@ -306,6 +306,8 @@ export default function RegisterPage() {
                     placeholder="Your full name"
                     value={formData.username}
                     onChange={handleChange}
+                    onInput={handleChange as any}
+                    autoComplete="name"
                     className={`pl-10 bg-gray-900 border-gray-700 text-white placeholder-gray-500 h-12 rounded-lg focus:border-purple-500 focus:ring-purple-500 ${errors.fullName ? "border-red-500 focus:border-red-500 focus:ring-red-500" : ""}`}
                     disabled={isLoading}
                   />
@@ -323,6 +325,8 @@ export default function RegisterPage() {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
+                    onInput={handleChange as any}
+                    autoComplete="email"
                     className={`pl-10 bg-gray-900 border-gray-700 text-white placeholder-gray-500 h-12 rounded-lg focus:border-purple-500 focus:ring-purple-500 ${errors.email ? "border-red-500 focus:border-red-500 focus:ring-red-500" : ""}`}
                     disabled={isLoading}
                   />
@@ -340,13 +344,15 @@ export default function RegisterPage() {
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
-                    className={`pl-10 pr-10 bg-gray-900 border-gray-700 text-white placeholder-gray-500 h-12 rounded-lg focus:border-purple-500 focus:ring-purple-500 ${errors.password ? "border-red-500 focus:border-red-500 focus:ring-red-500" : ""}`}
+                    onInput={handleChange as any}
+                    autoComplete="new-password"
+                    className={`pl-10 pr-12 bg-gray-900 border-gray-700 text-white placeholder-gray-500 h-12 rounded-lg focus:border-purple-500 focus:ring-purple-500 ${errors.password ? "border-red-500 focus:border-red-500 focus:ring-red-500" : ""}`}
                     disabled={isLoading}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-400"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-gray-500 hover:text-gray-400"
                     disabled={isLoading}
                   >
                     {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
@@ -383,7 +389,7 @@ export default function RegisterPage() {
               <Button
                 type="submit"
                 className="w-full mt-6 bg-purple-600 hover:bg-purple-700 text-white h-12 font-medium rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
-                disabled={!formData.username || !formData.email || !formData.password || !agreedToTerms || isLoading}
+                disabled={isLoading}
               >
                 {isLoading ? "Creating Account..." : "Create Account"}
               </Button>
