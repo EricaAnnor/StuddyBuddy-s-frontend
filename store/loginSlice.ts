@@ -28,7 +28,7 @@ export const loginUserThunk = createAsyncThunk<TokenResponse, any, { rejectValue
     "login",
     async (credentials, { rejectWithValue }) => {
         try {
-            const res = await axios.post<TokenResponse>('https://studybuddy-ilmw.onrender.com/studybuddy/v1/login', qs.stringify(credentials), { headers: { "Content-Type": "application/x-www-form-urlencoded" } });
+            const res = await axios.post<TokenResponse>('https://studybuddy-1-qkcg.onrender.com/studybuddy/v1/login', qs.stringify(credentials), { headers: { "Content-Type": "application/x-www-form-urlencoded" } });
             return res.data;
         } catch (error: any) {
             const detail = error.response?.data?.detail;
@@ -51,7 +51,7 @@ export const refreshThunk = createAsyncThunk<RefreshResponse, void, { rejectValu
 
     async (_, { rejectWithValue }) => {
         try {
-            const response = await axios.post("https://studybuddy-ilmw.onrender.com/studybuddy/v1/refresh", {},
+            const response = await axios.post("https://studybuddy-1-qkcg.onrender.com/studybuddy/v1/refresh", {},
                 {
                     withCredentials: true,
                 }

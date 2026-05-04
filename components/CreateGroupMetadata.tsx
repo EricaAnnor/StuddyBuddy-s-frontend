@@ -53,7 +53,7 @@ const GroupMetaData = ({ setShowmembers, setGroupdetails, group_details, setShow
         // If it already starts with http, return as is
         if (imagePath.startsWith('http')) return imagePath
         // Otherwise, prepend the base URL
-        return `https://studybuddy-ilmw.onrender.com${imagePath}`
+        return `https://studybuddy-1-qkcg.onrender.com${imagePath}`
     }
 
     const handleOnImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -3,7 +3,7 @@ import axios, { AxiosError, InternalAxiosRequestConfig, AxiosRequestConfig } fro
 import { store } from "@/store";
 import { setToken, logoutState } from "@/store/loginSlice";
 
-export const BASE_URL = "https://studybuddy-ilmw.onrender.com/studybuddy/v1";
+export const BASE_URL = "https://studybuddy-1-qkcg.onrender.com/studybuddy/v1";
 
 const api = axios.create({
   baseURL: BASE_URL,

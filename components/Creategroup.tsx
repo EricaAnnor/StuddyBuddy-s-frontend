@@ -23,7 +23,7 @@ const CreateGroup = ({ setShowGroup,setShowAllUsers }: showGrouptype) => {
         // If it already starts with http, return as is
         if (imagePath.startsWith('http')) return imagePath
         // Otherwise, prepend the base URL
-        return `https://studybuddy-ilmw.onrender.com${imagePath}`
+        return `https://studybuddy-1-qkcg.onrender.com${imagePath}`
     }
 
     const [groupdetails, setGroupdetails] = useState<{

@@ -42,7 +42,7 @@ const Allusers = ({setShowAllUsers}:showUsers) => {
         // If it already starts with http, return as is
         if (imagePath.startsWith('http')) return imagePath
         // Otherwise, prepend the base URL
-        return `https://studybuddy-ilmw.onrender.com${imagePath}`
+        return `https://studybuddy-1-qkcg.onrender.com${imagePath}`
     }
 
     interface AllUsersProps {

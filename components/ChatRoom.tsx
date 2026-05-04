@@ -135,7 +135,7 @@ export default function ChatRoom({ id, m_type, friend_pic, friend_name, onBack }
     setSendStatus("connecting");
 
     try {
-      const socket = new WebSocket(`wss://studybuddy-ilmw.onrender.com/studybuddy/v1/chat/send?token=${token}`);
+      const socket = new WebSocket(`wss://studybuddy-1-qkcg.onrender.com/studybuddy/v1/chat/send?token=${token}`);
       sendSocketRef.current = socket;
 
       socket.onopen = () => {
@@ -194,7 +194,7 @@ export default function ChatRoom({ id, m_type, friend_pic, friend_name, onBack }
     setReceiveStatus("connecting");
 
     try {
-      const socket = new WebSocket(`wss://studybuddy-ilmw.onrender.com/studybuddy/v1/chat/receive?token=${token}`);
+      const socket = new WebSocket(`wss://studybuddy-1-qkcg.onrender.com/studybuddy/v1/chat/receive?token=${token}`);
       receiveSocketRef.current = socket;
 
       socket.onopen = () => {
@@ -442,7 +442,7 @@ export default function ChatRoom({ id, m_type, friend_pic, friend_name, onBack }
           <div className="mt-2">
             <div className="relative cursor-pointer" onClick={() => setImageExpanded(true)}>
               <img
-                src={`https://studybuddy-ilmw.onrender.com${attachmentUrl}`}
+                src={`https://studybuddy-1-qkcg.onrender.com${attachmentUrl}`}
                 alt={filename}
                 className="max-w-xs max-h-48 object-cover rounded-lg"
               />
@@ -453,7 +453,7 @@ export default function ChatRoom({ id, m_type, friend_pic, friend_name, onBack }
                 onClick={() => setImageExpanded(false)}
               >
                 <img
-                  src={`https://studybuddy-ilmw.onrender.com${attachmentUrl}`}
+                  src={`https://studybuddy-1-qkcg.onrender.com${attachmentUrl}`}
                   alt={filename}
                   className="max-w-full max-h-full object-contain rounded-lg"
                 />
@@ -477,7 +477,7 @@ export default function ChatRoom({ id, m_type, friend_pic, friend_name, onBack }
                 <p className="text-sm font-medium text-white truncate">{filename}</p>
               </div>
               <Button variant="ghost" size="sm" className="text-gray-400 hover:text-white hover:bg-gray-600/50 transition-all">
-                <a href={`https://studybuddy-ilmw.onrender.com${attachmentUrl}`}>
+                <a href={`https://studybuddy-1-qkcg.onrender.com${attachmentUrl}`}>
                   <Download className="w-4 h-4" />
                 </a>
               </Button>
@@ -490,7 +490,7 @@ export default function ChatRoom({ id, m_type, friend_pic, friend_name, onBack }
           <div className="mt-2">
             <div className="relative cursor-pointer rounded-lg">
               <video
-                src={`https://studybuddy-ilmw.onrender.com${attachmentUrl}`}
+                src={`https://studybuddy-1-qkcg.onrender.com${attachmentUrl}`}
                 className="max-w-xs max-h-32 object-cover rounded-lg"
                 controls
               />
@@ -511,7 +511,7 @@ export default function ChatRoom({ id, m_type, friend_pic, friend_name, onBack }
   const getImageUrl = (imagePath: string | null | undefined) => {
     if (!imagePath) return "/placeholder.svg";
     if (imagePath.startsWith("http")) return imagePath;
-    return `https://studybuddy-ilmw.onrender.com${imagePath}`;
+    return `https://studybuddy-1-qkcg.onrender.com${imagePath}`;
   };
 
   return (

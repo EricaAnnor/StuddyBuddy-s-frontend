@@ -38,7 +38,7 @@ export default function DashboardPage() {
         // If it already starts with http, return as is
         if (imagePath.startsWith('http')) return imagePath
         // Otherwise, prepend the base URL
-        return `https://studybuddy-ilmw.onrender.com${imagePath}`
+        return `https://studybuddy-1-qkcg.onrender.com${imagePath}`
     }
 
     const imgsrc = getImageUrl(user?.profile_pic)
@@ -90,7 +90,7 @@ export default function DashboardPage() {
         console.log("Connecting to presence WebSocket...");
 
         try {
-            const socket = new WebSocket(`wss://studybuddy-ilmw.onrender.com/studybuddy/v1/presence?token=${token}`);
+            const socket = new WebSocket(`wss://studybuddy-1-qkcg.onrender.com/studybuddy/v1/presence?token=${token}`);
             socketRef.current = socket;
 
             socket.onopen = () => {

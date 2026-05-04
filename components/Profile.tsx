@@ -111,7 +111,7 @@ export default function EditProfile({
         // If it already starts with http, return as is
         if (imagePath.startsWith('http')) return imagePath
         // Otherwise, prepend the base URL
-        return `https://studybuddy-ilmw.onrender.com${imagePath}`
+        return `https://studybuddy-1-qkcg.onrender.com${imagePath}`
     }
 
     if (!isOpen) return null
