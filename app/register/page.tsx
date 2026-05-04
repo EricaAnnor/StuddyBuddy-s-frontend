@@ -82,29 +82,31 @@ export default function RegisterPage() {
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("Submit clicked, formData:", formData, "agreedToTerms:", agreedToTerms)
     setErrors({ fullName: "", email: "", password: "", general: "" ,check:""})
 
-    // Validate form before submission
     if (!validateForm()) {
+      console.log("Validation failed")
       return
     }
 
-    // Check terms agreement
     if (!agreedToTerms) {
       setErrors((prev) => ({ ...prev, check: "Please agree to the Terms & Privacy" }))
+      console.log("Terms not agreed")
       return
     }
 
+    console.log("Dispatching register thunk...")
     setIsLoading(true)
     try {
-
       dispatch(registerUserThunk(formData));
     } catch (error) {
       setErrors((prev) => ({
         ...prev,
         general: "Registration failed. Please try again.",
       }))
-      console.error("[v0] Registration error:", error)
+      setIsLoading(false)
+      console.error("Registration error:", error)
     }
   };
 
@@ -367,12 +369,15 @@ export default function RegisterPage() {
                   className="mt-1 w-4 h-4 text-purple-600 bg-gray-900 border-gray-700 rounded focus:ring-purple-500 focus:ring-2"
                   disabled={isLoading}
                 />
-                <label htmlFor="terms" className="text-sm text-gray-400">
-                  I agree to the{" "}
-                  <button type="button" className="text-purple-400 hover:text-purple-300">
-                    Terms & Privacy
-                  </button>
-                </label>
+                <div>
+                  <label htmlFor="terms" className="text-sm text-gray-400">
+                    I agree to the{" "}
+                    <button type="button" className="text-purple-400 hover:text-purple-300">
+                      Terms & Privacy
+                    </button>
+                  </label>
+                  <ErrorMessage error={errors.check} />
+                </div>
               </div>
 
               <Button
