@@ -95,7 +95,7 @@ export default function RegisterPage() {
       return
     }
 
-    setIsLoading(loading)
+    setIsLoading(true)
     try {
 
       dispatch(registerUserThunk(formData));
@@ -120,9 +120,9 @@ export default function RegisterPage() {
 
   useEffect(() => {
     if (error) {
-      setErrors((prev) => ({ ...prev, general: typeof error === "string" ? error : "Something went wrong", }))
+      setErrors((prev) => ({ ...prev, general: typeof error === "string" ? error : "Something went wrong" }))
+      setIsLoading(false)
     }
-
 
     if (user) {
       dispatch(resetRegisterState());
